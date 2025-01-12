@@ -112,10 +112,10 @@ export const workData = [
 ]
 
 export const serviceData = [
-    { icon: assets.cloud_computing, title: 'Cloud Computing', description: 'Web development is the process of building, programming...', link: '' },
-    { icon: assets.machine_learning, title: 'Machine Learning', description: 'Mobile app development involves creating software for mobile devices...', link: '' },
-    { icon: assets.webdev, title: 'Web Development', description: 'Web development is the process of building, programming...', link: '' },
-    { icon: assets.user_interface, title: 'Design', description: 'UI/UX design focuses on creating a seamless user experience...', link: '' }
+    { icon: assets.cloud_computing, title: 'Cloud Computing', description: 'Leveraging internet-based platforms to store data seamlessly...', link: '' },
+    { icon: assets.machine_learning, title: 'Machine Learning', description: 'Developing AI models capable of learning and making predictions...', link: '' },
+    { icon: assets.webdev, title: 'Web Development', description: 'Designing and building responsive and functional web applications...', link: '' },
+    { icon: assets.user_interface, title: 'Design', description: 'Creating aesthetic interfaces and intuitive user experiences...', link: '' }
 ]
 
 
