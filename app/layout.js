@@ -1,41 +1,51 @@
-import { Outfit, Ovo } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "./components/ThemeProvider";
 
-const outfit = Outfit({
-  subsets: ["latin"], weight: ["400", "500", "600", "700"]
-});
-
-const ovo = Ovo({
-  subsets: ["latin"], weight: ["400"]
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata = {
-  title: "Erlanggs | Data Scientist & Machine Learning Expert",
-  description: "Portfolio of Muhammad Erlangga Prasetya - Data Scientist, Machine Learning Engineer, and Cloud Computing specialist based in Bogor, Indonesia. Explore my projects and expertise in AI/ML.",
-  keywords: ["Data Scientist", "Machine Learning", "Cloud Computing", "AI", "Python", "Web Development", "Portfolio"],
+  title: "Erlanggs | Software Developer & Data Specialist",
+  description:
+    "Portfolio of Muhammad Erlangga Prasetya – Software Developer, AI specialist, and Cloud Computing enthusiast. Explore projects in data science, machine learning, and full-stack development.",
+  keywords: [
+    "Software Developer",
+    "Data Scientist",
+    "Machine Learning",
+    "Cloud Computing",
+    "AI",
+    "Python",
+    "Portfolio",
+  ],
   authors: [{ name: "Muhammad Erlangga Prasetya" }],
   creator: "Muhammad Erlangga Prasetya",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://erlanggs.com",
-    title: "Erlanggs | Data Scientist & Machine Learning Expert",
-    description: "Portfolio of Muhammad Erlangga Prasetya - Data Scientist and Machine Learning Engineer specializing in AI solutions and cloud computing.",
+    title: "Erlanggs | Software Developer & Data Specialist",
+    description:
+      "Portfolio of Muhammad Erlangga Prasetya – Software Developer and AI specialist.",
     siteName: "Erlanggs Portfolio",
     images: [
       {
         url: "/profile-img.png",
         width: 1200,
         height: 630,
-        alt: "Muhammad Erlangga Prasetya - Data Scientist",
+        alt: "Muhammad Erlangga Prasetya",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Erlanggs | Data Scientist & Machine Learning Expert",
-    description: "Portfolio of Muhammad Erlangga Prasetya - Data Scientist and Machine Learning Engineer",
-    images: ["/profile-img.png"],
+    title: "Erlanggs | Software Developer & Data Specialist",
+    description:
+      "Portfolio of Muhammad Erlangga Prasetya – Software Developer and AI specialist.",
+    images: ["/profile.png"],
   },
   robots: {
     index: true,
@@ -52,12 +62,16 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body
-        className={`${outfit.className} ${ovo.className} antialiased leading-8 overflow-x-hidden 
-        dark:bg-darkTheme dark:text-white`}
-      >
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${poppins.className} antialiased`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+          disableTransitionOnChange={false}
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

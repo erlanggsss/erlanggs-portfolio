@@ -1,80 +1,121 @@
-import { assets, workData } from '@/assets/assets'
-import Image from 'next/image'
-import React from 'react'
-import { motion } from "motion/react"
+'use client';
 
-const Project = ({isDarkMode}) => {
+import React from 'react';
+import { motion } from 'motion/react';
+import { PROJECTS } from '../constants';
+import SectionDivider from './SectionDivider';
+
+const Project = () => {
   return (
-    <motion.section
-    initial={{ opacity: 0}}
-    whileInView={{ opacity: 1}}
-    transition={{ duration: 1}}
-    id='project' className='w-full px-[12%] py-10 scroll-mt-20'>
-        
-        <motion.h4
-        initial={{y: -20, opacity: 0}}
-        whileInView={{y: 0, opacity: 1}}
-        transition={{delay: 0.3, duration: 0.5}}
-        className='text-center mb-2 text-lg font-Ovo'>
-            Project</motion.h4>
+    <section id="project" className="px-6 lg:px-16 xl:px-24 scroll-mt-20 pb-20">
+      <SectionDivider label="PROJECT SECTION" />
 
-        <motion.h2
-        initial={{y: -20, opacity: 0}}
-        whileInView={{y: 0, opacity: 1}}
-        transition={{delay: 0.5, duration: 0.5}}
-        className='text-center text-5xl font-Ovo'>
-            My Latest Work</motion.h2>
-
-        <motion.p 
-        initial={{opacity: 0}}
-        whileInView={{opacity: 1}}
-        transition={{delay: 0.07, duration: 0.5}}
-        className='text-center max-w-2xl mx-auto mt-5 mb-12 font-Ovo'>
-            Welcome to my portfolio website! 
-            Explore my latest collection of exciting projects.
+      <div className="max-w-3xl">
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="text-xs uppercase tracking-widest text-[var(--text-muted)] mb-8"
+        >
+          SELECTED WORKS
         </motion.p>
 
-        <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ delay: 0.9, duration: 0.6 }}
-        className='grid grid-cols-auto my-10 gap-5 dark:text-black'>
-            {workData.map((project, index)=>(
-                <motion.div
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
-                key={index} 
-                className='aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group'
-                style={{backgroundImage: `url(${project.bgImage})`}}
-                role="article"
-                aria-label={`${project.title} - ${project.description} project`}>
-                    <div className='bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex 
-                    items-center justify-between duration-500 group-hover:bottom-7'>
-                        <div>
-                            <h2 className='font-semibold'>{project.title}</h2>
-                            <p className='text-sm text-gray-700'>{project.description}</p>
-                        </div>
-                        <div className='border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000]
-                        group-hover:bg-lightHover transition'>
-                            <Image src={assets.send_icon} alt='send icon' className='w-5'/>
-                        </div>
+        {/* Project list */}
+        <div className="space-y-0">
+          {PROJECTS.map((project, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.15 }}
+              viewport={{ once: true }}
+              className="border-t border-[var(--border-color)] py-8 group"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-start gap-4">
+                {/* Number + Title */}
+                <div className="flex items-center gap-4 sm:gap-6 flex-1">
+                  <span className="text-sm text-[var(--text-muted)] font-medium tabular-nums min-w-[2rem]">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <div className="hidden sm:block w-12 h-[1px] bg-[var(--border-color)]" />
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold mb-2">{project.title}</h3>
+                    <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4 max-w-lg">
+                      {project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.stack.map((tech) => (
+                        <span key={tech} className="tech-chip text-xs">
+                          {tech}
+                        </span>
+                      ))}
                     </div>
-                </motion.div>
-            ))}
+                  </div>
+                </div>
+
+                {/* Code link */}
+                {project.link && (
+                  <motion.a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ x: 3 }}
+                    transition={{ duration: 0.2 }}
+                    className="inline-flex items-center gap-1.5 text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors self-start mt-1"
+                  >
+                    code
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <line x1="7" y1="17" x2="17" y2="7" />
+                      <polyline points="7,7 17,7 17,17" />
+                    </svg>
+                  </motion.a>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* View all projects */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          viewport={{ once: true }}
+          className="mt-8"
+        >
+          <a
+            href="#"
+            className="inline-flex items-center gap-2 px-5 py-2.5 text-sm border border-[var(--border-color)] rounded-full hover:border-[var(--text-muted)] transition-colors duration-200"
+          >
+            View all projects
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12,5 19,12 12,19" />
+            </svg>
+          </a>
         </motion.div>
+      </div>
+    </section>
+  );
+};
 
-        <motion.a
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ delay: 1.1, duration: 0.5 }}
-        href="" className='w-max flex items-center justify-center gap-2 text-gray-700 border-[0.5px] border-gray-700 rounded-full py-3 px-10 mx-auto
-        my-20 hover:bg-lightHover duration-500 dark:text-white dark:border-white dark:hover:bg-darkHover'>
-            Show More 
-            <Image src={isDarkMode ? assets.right_arrow_bold_dark : assets.right_arrow_bold} alt='Right arrow' className='w-4'/>
-        </motion.a>
-
-    </motion.section>
-  )
-}
-
-export default Project
+export default Project;

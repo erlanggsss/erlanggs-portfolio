@@ -1,5 +1,3 @@
-import { Outfit } from 'next/font/google';
-
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -7,27 +5,25 @@ export default {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+      },
       colors: {
-        lightHover: '#C8D3C8',
-        darkHover: '#06004A',
-        darkTheme: '#03001F',
-        liddyGreen: '#647C64',
+        primary: 'var(--text-primary)',
+        secondary: 'var(--text-secondary)',
+        muted: 'var(--text-muted)',
+        surface: 'var(--bg-primary)',
+        'surface-alt': 'var(--bg-secondary)',
+        border: 'var(--border-color)',
+        'border-light': 'var(--border-color-light)',
+        accent: 'var(--accent)',
+        chip: 'var(--chip-bg)',
+        'chip-border': 'var(--chip-border)',
       },
-      fontFamily:{
-        Outfit: ["Outfit", "sans-serif"],
-        Ovo: ["Ovo", "serif"]
-      },
-      boxShadow: {
-        'black' : '4px 4px 0 #000',
-        'white' : '4px 4px 0 #ff',
-      },
-      gridTemplateColumns: {
-        'auto': 'repeat(auto-fit, minmax(200px, 1fr))'
-      }
     },
   },
-  darkMode: 'selector',
   plugins: [],
 };

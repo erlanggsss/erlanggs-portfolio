@@ -1,95 +1,77 @@
-import { assets, infoList, toolsData } from '@/assets/assets'
-import Image from 'next/image'
-import React from 'react'
-import { motion } from "motion/react"
+'use client';
 
-const About = ({isDarkMode}) => {
+import React from 'react';
+import { motion } from 'motion/react';
+import { ABOUT } from '../constants';
+import SectionDivider from './SectionDivider';
+
+const About = () => {
   return (
-    <motion.section id='about' className='w-full px-[12%] py-10 scroll-mt-20'
-    initial={{ opacity: 0 }}
-    whileInView={{ opacity: 1 }}
-    transition={{ duration: 1 }}
-    >
-      <motion.h4
-      initial={{ opacity: 0, y: -20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.3 }}
-      className='text-center mb-2 text-lg font-Ovo'>
-        Introduction</motion.h4>
+    <section id="about" className="px-6 lg:px-16 xl:px-24 scroll-mt-20">
+      <SectionDivider label="ABOUT SECTION" />
 
-      <motion.h2 
-      initial={{ opacity: 0, y: -20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.5 }}
-      className='text-center text-5xl font-Ovo'>
-        About me</motion.h2>
+      <div className="max-w-3xl">
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="text-xs uppercase tracking-widest text-[var(--text-muted)] mb-4"
+        >
+          ABOUT
+        </motion.p>
 
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          viewport={{ once: true }}
+          className="text-3xl sm:text-4xl font-bold mb-2"
+        >
+          {ABOUT.title}
+        </motion.h2>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="text-[var(--text-secondary)] text-sm mb-8"
+        >
+          {ABOUT.subtitle}
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          viewport={{ once: true }}
+          className="text-[var(--text-secondary)] leading-relaxed mb-10 max-w-2xl"
+        >
+          {ABOUT.description}
+        </motion.p>
+
+        {/* Tech Stack */}
         <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className='flex w-full flex-col lg:flex-row items-center gap-20 my-20'>
-            <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            className='w-64 sm:w-80 rounded-3xl max-w-none'>
-              <Image src={assets.user_image} alt='Muhammad Erlangga Prasetya portrait' className='w-full rounded-3xl'/>
-            </motion.div>
-
-            <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className='flex-1'>
-              <p className='mb-10 max-w-2xl font-Ovo'>
-                I have a great interest in IT, especially <b>Machine Learning</b>. With strong <b>analytical thinking skills</b>, <b>leadership</b>
-                , and a <b>commitment to continuous learning</b>, I aspire to become a professional 
-                who can provide many impactful solutions. I am also a <b>graduated at Bangkit Academy</b> led by Google, GoTo, 
-                Tokopedia & Traveloka, as a <b>Cloud Computing Cohort (2023)</b> and <b>Machine Learning Cohort (2024)</b>.</p>
-            
-              <motion.ul
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 1 }}
-              className='grid grid-col-1 sm:grid-cols-3 gap-6 max-w-2xl'>
-                {infoList.map(({icon, iconDark, title, description}, index)=>(
-                  <motion.li
-                  whileHover={{ scale: 1.05 }}
-                  className='border-[0.5px] border-gray-400 rounded-xl p-6 cursor-pointer hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black
-                  dark:hover:shadow-white dark:hover:bg-darkHover/50' 
-                  key={index}>
-                    <Image src={isDarkMode ? iconDark : icon} alt={title}/>
-                    <h3 className='my-4 font-semibold text-gray-700 dark:text-white'>{title}</h3>
-                    <p className='text-gray-600 text-sm dark:text-white/80'>{description}</p>
-                  </motion.li>
-                ))}
-              </motion.ul>
-                
-                <motion.h4
-                initial={{ y: 20, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ delay: 1.3, duration: 0.5 }}
-                className='my-6 text-gray-700 font-Ovo dark:text-white/80'>Tools i use</motion.h4>
-
-                <motion.ul
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 1.5, duration: 0.6 }}
-                className='flex items-center gap-3 sm:gap-5 '>
-                  {toolsData.map((tool, index)=>(
-                    <motion.li
-                    whileInView={{ scale: 1.1 }}
-                    className='flex items-center justify-center w-12 sm:w-14 aspect-square border border-gray-400 rounded-lg cursor-pointer hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black' key={index}>
-                      <Image src={tool} alt='Tool' className='w-5 sm:w-7'/>
-                    </motion.li>
-                  ))}
-                </motion.ul>
-
-            </motion.div>
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          viewport={{ once: true }}
+        >
+          <p className="text-xs uppercase tracking-widest text-[var(--text-muted)] mb-4">
+            TECH STACK
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {ABOUT.techStack.map((tech) => (
+              <span key={tech} className="tech-chip">
+                {tech}
+              </span>
+            ))}
+          </div>
         </motion.div>
-    </motion.section>
-  )
-}
+      </div>
+    </section>
+  );
+};
 
-export default About
+export default About;

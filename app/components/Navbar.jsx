@@ -1,85 +1,182 @@
-import { assets } from '@/assets/assets'
-import Image from 'next/image'
-import React, { useEffect, useRef, useState } from 'react'
+'use client';
 
-const navbar = ({isDarkMode, setIsDarkMode}) => {
+import React, { useState } from 'react';
+import { useTheme } from 'next-themes';
+import { motion, AnimatePresence } from 'motion/react';
+import ContactModal from './ContactModal';
 
-    const [isScroll, setIsScroll] = useState(false)
-    const sideMenuRef = useRef();
+const Navbar = () => {
+  const { theme, setTheme } = useTheme();
+  const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    const openMenu = ()=>{
-      sideMenuRef.current.style.transform = 'translateX(-16rem)'
-    }
+  const navLinks = [
+    { label: 'Home', href: '#top' },
+    { label: 'About', href: '#about' },
+    { label: 'Experience', href: '#experience' },
+    { label: 'Project', href: '#project' },
+  ];
 
-    const closeMenu = () => {
-    if (sideMenuRef.current) {
-        sideMenuRef.current.style.transform = 'translateX(100%)'; }
-    }
-
-    useEffect(()=>{
-      window.addEventListener('scroll', ()=>{
-        if(scrollY > 50){
-            setIsScroll(true)
-        }else{
-            setIsScroll(false)
-        }
-      })
-    },[])
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
 
   return (
     <>
-    <div className='fixed top-0 right-0 w-11/12 -z-10 translate-y-[-80%] dark:hidden'>
-        <Image src={assets.header_bg_color} alt='' className='w-full' />
-    </div>
-
-      <nav className={`w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50 ${isScroll ? "bg-white bg-opacity-50 backdrop-blur-lg shadow-sm dark:bg-darkTheme dark:shadow-white/20" : ""}`}>
-        <a href="#top" aria-label="Go to homepage">
-            <Image src={isDarkMode ? assets.logo_dark : assets.logo} alt="Erlanggs logo" 
-            className='w-full cursor-pointer mr-14'/>
-        </a>
-
-        <ul className={`hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 ${isScroll ? "" : "bg-white shadow-sm bg-opacity-50 dark:border dark:border-white/50 dark:bg-transparent"}`}>
-            <li><a className='font-Ovo' href="#top">Home</a></li>
-            <li><a className='font-Ovo' href="#about">About me</a></li>
-            <li><a className='font-Ovo' href="#services">Services</a></li>
-            <li><a className='font-Ovo' href="#project">Project</a></li>
-            <li><a className='font-Ovo' href="#contact">Contact me</a></li>
+      <motion.nav
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="fixed top-0 left-0 right-0 z-50 px-6 lg:px-16 xl:px-24 py-4 flex items-center justify-between bg-[var(--bg-primary)]/80 backdrop-blur-md border-b border-[var(--border-color-light)]"
+      >
+        {/* Left — Nav Links */}
+        <ul className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) => (
+            <li key={link.label}>
+              <a
+                href={link.href}
+                className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200 link-hover"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
         </ul>
 
-        <div className='flex items-center gap-4'>
-            <button onClick={()=> setIsDarkMode(prev => ! prev)}>
-              <Image src={isDarkMode ? assets.sun_icon : assets.moon_icon} alt='' className='w-6' />
-            </button>
+        {/* Mobile hamburger */}
+        <button
+          className="md:hidden flex flex-col gap-1.5 z-50"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <motion.span
+            animate={isMobileMenuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
+            className="block w-6 h-[2px] bg-[var(--text-primary)] transition-colors"
+          />
+          <motion.span
+            animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
+            className="block w-6 h-[2px] bg-[var(--text-primary)] transition-colors"
+          />
+          <motion.span
+            animate={isMobileMenuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
+            className="block w-6 h-[2px] bg-[var(--text-primary)] transition-colors"
+          />
+        </button>
 
-            <a href="#contact" className='hidden lg:flex items-center gap-3 px-10 py-2.5 border 
-            border-gray-500 rounded-full ml-4 font-Ovo dark:border-white/50'>
-              Contact 
-            <Image src={isDarkMode ? assets.arrow_icon_dark : assets.arrow_icon} alt=" " className='w-3'/></a>
-        
-            <button className='block md:hidden ml-3' onClick={openMenu}>
-              <Image src={isDarkMode ? assets.menu_white : assets.menu_black} alt='' className='w-6' />
-            </button>
+        {/* Right — Icons & Badge */}
+        <div className="flex items-center gap-4">
+          {/* Contact icon */}
+          <button
+            onClick={() => setIsContactOpen(true)}
+            aria-label="Open contact form"
+            className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-[var(--chip-bg)] transition-colors duration-200"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+              <polyline points="2,3 12,13 22,3" />
+            </svg>
+          </button>
+
+          {/* Theme toggle */}
+          <button
+            onClick={toggleTheme}
+            aria-label="Toggle dark mode"
+            className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-[var(--chip-bg)] transition-colors duration-200"
+          >
+            {theme === 'dark' ? (
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+              </svg>
+            ) : (
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            )}
+          </button>
+
+          {/* OPEN TO WORK badge */}
+          <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 border border-[var(--border-color)] rounded-full text-xs font-medium tracking-wide">
+            <span className="w-2 h-2 rounded-full bg-green-500 blink-dot" />
+            <span>OPEN TO WORK</span>
+          </div>
         </div>
+      </motion.nav>
 
-        {/* -- ---- mobile menu ------ -- */}
-      
-      {/* bg rose warna dari bg menu*/}
-        <ul ref={sideMenuRef} className='flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64
-        top-0 bottom-0 w-64 z-50 h-screen bg-liddyGreen transition duration-500 dark:bg-darkHover dark:text-white'>
-           
-           <div className='absolute right-6 top-6' onClick={closeMenu}>
-                 <Image src={isDarkMode ? assets.close_white : assets.close_black} alt='' className='w-5 cursor-pointer'/>
-           </div>
+      {/* Mobile menu overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-40 bg-[var(--bg-primary)] flex flex-col items-center justify-center gap-8"
+          >
+            {navLinks.map((link, i) => (
+              <motion.a
+                key={link.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ delay: i * 0.1 }}
+                href={link.href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-2xl font-medium text-[var(--text-primary)] hover:text-[var(--text-secondary)] transition-colors"
+              >
+                {link.label}
+              </motion.a>
+            ))}
 
-            <li><a className='font-Ovo' onClick={closeMenu} href="#top">Home</a></li>
-            <li><a className='font-Ovo' onClick={closeMenu} href="#about">About me</a></li>
-            <li><a className='font-Ovo' onClick={closeMenu} href="#services">Service</a></li>
-            <li><a className='font-Ovo' onClick={closeMenu} href="#project">Project</a></li>
-            <li><a className='font-Ovo' onClick={closeMenu} href="#contact">Contact me</a></li>
-        </ul>
-      </nav>
+            {/* OPEN TO WORK badge (mobile) */}
+            <div className="flex items-center gap-2 px-3 py-1.5 border border-[var(--border-color)] rounded-full text-xs font-medium tracking-wide mt-4">
+              <span className="w-2 h-2 rounded-full bg-green-500 blink-dot" />
+              <span>OPEN TO WORK</span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Contact Modal */}
+      <ContactModal
+        isOpen={isContactOpen}
+        onClose={() => setIsContactOpen(false)}
+      />
     </>
-  )
-}
+  );
+};
 
-export default navbar
+export default Navbar;
