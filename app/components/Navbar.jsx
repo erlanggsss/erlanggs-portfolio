@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { motion, AnimatePresence } from 'motion/react';
 import ContactModal from './ContactModal';
@@ -9,6 +9,12 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  // Prevent hydration mismatch — theme is undefined on the server
+  // but reads from localStorage on the client. Without this guard,
+  // React 19 can fail to hydrate on older Safari (iOS 15).
+  useEffect(() => setMounted(true), []);
 
   const navLinks = [
     { label: 'Home', href: '#top' },
@@ -92,7 +98,9 @@ const Navbar = () => {
             aria-label="Toggle dark mode"
             className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-[var(--chip-bg)] transition-colors duration-200"
           >
-            {theme === 'dark' ? (
+            {!mounted ? (
+              <span className="w-[18px] h-[18px]" />
+            ) : theme === 'dark' ? (
               <svg
                 width="18"
                 height="18"
