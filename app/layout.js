@@ -33,7 +33,7 @@ export const metadata = {
     siteName: "Erlanggs Portfolio",
     images: [
       {
-        url: "/profile-img.png",
+        url: "/profile.png",
         width: 1200,
         height: 630,
         alt: "Muhammad Erlangga Prasetya",

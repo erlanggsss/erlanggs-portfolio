@@ -4,7 +4,6 @@ import Image from 'next/image';
 import React from 'react';
 import { motion } from 'motion/react';
 import { PERSONAL_INFO } from '../constants';
-import { assets } from '@/assets/assets';
 
 const Header = () => {
   // Parse markdown-style bold (**text**) in the subtext
@@ -112,10 +111,11 @@ const Header = () => {
         >
           <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-[var(--chip-bg)]">
             <Image
-              src={assets.profile_img}
+              src="/profile.png"
               alt={`${PERSONAL_INFO.name} profile picture`}
-              fill
-              className="object-cover"
+              width={640}
+              height={853}
+              className="object-cover w-full h-full"
               priority
             />
           </div>
