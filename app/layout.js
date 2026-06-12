@@ -9,7 +9,7 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "Erlanggs | Software Developer & Data Specialist",
+  title: "Muhammad Erlangga Prasetya - Software Engineer",
   description:
     "Portfolio of Muhammad Erlangga Prasetya – Software Developer, AI specialist, and Cloud Computing enthusiast. Explore projects in data science, machine learning, and full-stack development.",
   keywords: [
