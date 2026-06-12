@@ -1,17 +1,16 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import React from 'react';
-import { motion } from 'motion/react';
-import { PERSONAL_INFO } from '../constants';
-import { assets } from '@/assets/assets';
+import Image from "next/image";
+import React from "react";
+import { motion } from "motion/react";
+import { PERSONAL_INFO } from "../constants";
 
 const Header = () => {
   // Parse markdown-style bold (**text**) in the subtext
   const renderSubtext = (text) => {
     const parts = text.split(/(\*\*.*?\*\*)/g);
     return parts.map((part, i) => {
-      if (part.startsWith('**') && part.endsWith('**')) {
+      if (part.startsWith("**") && part.endsWith("**")) {
         return (
           <strong key={i} className="font-semibold text-[var(--text-primary)]">
             {part.slice(2, -2)}
@@ -24,27 +23,45 @@ const Header = () => {
 
   const socialLinks = [
     {
-      label: 'LinkedIn',
+      label: "LinkedIn",
       href: PERSONAL_INFO.linkedin,
       icon: (
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <line x1="7" y1="17" x2="17" y2="7" /><polyline points="7,7 17,7 17,17" />
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <line x1="7" y1="17" x2="17" y2="7" />
+          <polyline points="7,7 17,7 17,17" />
         </svg>
       ),
     },
     {
-      label: 'Email',
+      label: "Email",
       href: `mailto:${PERSONAL_INFO.email}`,
-      icon: (
-        <span className="text-xs font-medium">@</span>
-      ),
+      icon: <span className="text-xs font-medium">@</span>,
     },
     {
-      label: 'GitHub',
+      label: "GitHub",
       href: PERSONAL_INFO.github,
       icon: (
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="16,18 22,12 16,6" /><polyline points="8,6 2,12 8,18" />
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <polyline points="16,18 22,12 16,6" />
+          <polyline points="8,6 2,12 8,18" />
         </svg>
       ),
     },
@@ -65,17 +82,17 @@ const Header = () => {
           className="flex-1"
         >
           <p className="text-sm text-[var(--text-secondary)] mb-3">
-            Hello I&apos;m{' '}
+            Hello I&apos;m{" "}
             <span className="font-semibold text-[var(--text-primary)]">
               {PERSONAL_INFO.name}
             </span>
           </p>
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.25rem] font-bold leading-tight tracking-tight mb-6">
-            {PERSONAL_INFO.headline.split('\n').map((line, i) => (
+            {PERSONAL_INFO.headline.split("\n").map((line, i) => (
               <React.Fragment key={i}>
                 {line}
-                {i < PERSONAL_INFO.headline.split('\n').length - 1 && <br />}
+                {i < PERSONAL_INFO.headline.split("\n").length - 1 && <br />}
               </React.Fragment>
             ))}
           </h1>
@@ -90,8 +107,8 @@ const Header = () => {
               <motion.a
                 key={link.label}
                 href={link.href}
-                target={link.label !== 'Email' ? '_blank' : undefined}
-                rel={link.label !== 'Email' ? 'noopener noreferrer' : undefined}
+                target={link.label !== "Email" ? "_blank" : undefined}
+                rel={link.label !== "Email" ? "noopener noreferrer" : undefined}
                 whileHover={{ y: -2 }}
                 transition={{ duration: 0.2 }}
                 className="inline-flex items-center gap-2 px-4 py-2 text-sm border border-[var(--border-color)] rounded-full hover:border-[var(--text-muted)] transition-colors duration-200"
@@ -112,10 +129,11 @@ const Header = () => {
         >
           <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-[var(--chip-bg)]">
             <Image
-              src={assets.profile_img}
+              src="/profilee.png"
               alt={`${PERSONAL_INFO.name} profile picture`}
-              fill
-              className="object-cover"
+              width={640}
+              height={853}
+              className="object-cover w-full h-full"
               priority
             />
           </div>
